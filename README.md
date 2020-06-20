@@ -1,60 +1,22 @@
-# Project Title
+# EDRP - Earthquake Damage Risk Predictor
 
-One Paragraph of project description goes here
+EDRP uses machine learning to determine the risk of property damage at a given location. By using U.S.G.S. earthquake data, the application can use measurements from previous nearby earthquakes and determine a measurement of risk for the given location.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+TBD
 
 ### Installing
 
-Step by step series of examples
-
-Say what the step will be
-
-```
-Give an example
-```
-
-Repeat
-
-## Running Tests
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
+TBD
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-## Versioning
-
-## Authors
-
-* **Camden DeVoogd** - *Initial work* - [cdevoogd](https://github.com/cdevoogd)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+TBD
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
 
