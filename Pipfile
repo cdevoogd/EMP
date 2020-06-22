@@ -6,9 +6,11 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-flask = "*"
 scikit-learn = "*"
 pandas = "*"
+dash = "*"
+plotly = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.8"

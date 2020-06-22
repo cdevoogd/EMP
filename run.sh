@@ -1,2 +1,1 @@
-export FLASK_APP=edrp/app.py
-flask run
+python3 edrp/app.py

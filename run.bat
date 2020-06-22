@@ -1,2 +1,1 @@
-set FLASK_APP=edrp/app.py
-flask run
+python edrp/app.py
