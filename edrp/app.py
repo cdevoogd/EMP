@@ -31,8 +31,7 @@ scattermap = px.scatter_mapbox(
     size_max=20,
     zoom=3)
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__)
 app.layout = html.Div(children=[
     html.H1(children='Earthquake Damage Risk Predictor'),
 
