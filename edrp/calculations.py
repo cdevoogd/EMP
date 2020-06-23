@@ -8,7 +8,25 @@ def calc_distance_between_coords(lat1, lon1, lat2, lon2, kilometers=False):
     
     Calculations within the algorithm are in kilometers, but the returned value will 
     be in miles by default, or kilometers if the optional parameter is set.
-    """
+
+    Parameters
+    -----------
+    lat1 : float 
+        Latitude value for the first coordinate
+    lon1 : float 
+        Longitude value for the first coordinate
+    lat2 : float 
+        Latitude value for the second coordinate
+    lon2 : float 
+        Longitude value for the second coordinate
+    kilometers : bool, optional
+        Determines if the returned distance is in kilometers or miles. (default: False)
+
+    Returns
+    --------
+    float
+        Number representing the distance between the two coordinate sets (in miles by default).
+"""
 
     earth_radius = 6371
     # We need to work with radians instead of degrees
