@@ -27,8 +27,9 @@ scattermap = px.scatter_mapbox(
     lat=earthquakes.latitude, 
     lon=earthquakes.longitude,
     opacity=0.75,
-    size=earthquakes.magnitude * 2,
-    size_max=20,
+    # Setting the size like this allows the larger earthquakes to stand out more on the map
+    size=earthquakes.magnitude ** 5,
+    size_max=25,
     zoom=3)
 
 app = dash.Dash(__name__)
