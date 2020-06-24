@@ -25,8 +25,8 @@ scattermap = px.scatter_mapbox(
     height=750, 
     lat=earthquakes.latitude, 
     lon=earthquakes.longitude,
-    opacity=0.75,
-    # Setting the size like this allows the larger earthquakes to stand out more on the map
+    # Setting the size & opacity like this allows the larger earthquakes to stand out on the map
+    opacity=earthquakes.magnitude / 10,
     size=earthquakes.magnitude ** 5,
     size_max=25,
     zoom=3)
@@ -50,7 +50,6 @@ app.layout = html.Div(children=[
         ),
         html.Button(
             children='Submit',
-            className='button',
             id='submit_location',
             # Setting the button's type to 'button' prevents the page from being reloaded when it is pressed
             type='button'
