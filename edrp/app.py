@@ -35,28 +35,36 @@ scattermap = px.scatter_mapbox(
 stylesheets = ['https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css']
 app = dash.Dash(__name__, external_stylesheets=stylesheets)
 app.layout = html.Div(children=[
-    html.H1(children='Earthquake Damage Risk Predictor'),
+    dbc.NavbarSimple(
+        brand='Earthquake Damage Risk Predictor',
+        color='primary',
+        dark=True
+    ),
 
-    html.Form(children=[
-        dcc.Input(
-            id='input_latitude',
-            persistence_type='session',
-            placeholder=default_latitude,
-            type='number'
-        ),
-        dcc.Input(
-            id='input_longitude',
-            persistence_type='session',
-            placeholder=default_longitude,
-            type='number'
-        ),
-        html.Button(
-            children='Submit',
-            id='submit_location',
-            # Setting the button's type to 'button' prevents the page from being reloaded when it is pressed
-            type='button'
-        )
-    ]),
+    dbc.Form(
+        [
+            dbc.FormGroup([
+                dbc.Label('Latitude', html_for='input_latitude'),
+                dbc.Input(
+                    className='input_latitude',
+                    id='input_latitude', 
+                    type='number', 
+                    placeholder=default_latitude
+                )
+            ]),
+            dbc.FormGroup([
+                dbc.Label('Longitude', html_for='input_longitude'),
+                dbc.Input(
+                    className='input_longitude',
+                    id='input_longitude',
+                    type='number',
+                    placeholder=default_longitude
+                )
+            ]),
+            dbc.Button('Submit', id='submit_coords', color='primary')
+        ],
+        inline=True
+    ),
 
     dcc.Graph(
         id='local_scattermap',
@@ -64,7 +72,7 @@ app.layout = html.Div(children=[
     )
 ])
 
-@app.callback(Output('local_scattermap', 'figure'), [Input('submit_location', 'n_clicks')], [State('input_latitude', 'value'), State('input_longitude', 'value')])
+@app.callback(Output('local_scattermap', 'figure'), [Input('submit_coords', 'n_clicks')], [State('input_latitude', 'value'), State('input_longitude', 'value')])
 def update_map_target(n_clicks, latitude, longitude):
     # This callback will fire when the page loads. We don't want to update the map until the button is actually clicked
     if n_clicks is not None:
