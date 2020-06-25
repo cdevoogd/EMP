@@ -1,6 +1,7 @@
 import os
 
 import dash
+import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
@@ -31,7 +32,8 @@ scattermap = px.scatter_mapbox(
     size_max=25,
     zoom=3)
 
-app = dash.Dash(__name__)
+stylesheets = ['https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css']
+app = dash.Dash(__name__, external_stylesheets=stylesheets)
 app.layout = html.Div(children=[
     html.H1(children='Earthquake Damage Risk Predictor'),
 
