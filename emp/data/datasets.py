@@ -2,4 +2,4 @@
 
 import pandas as pd
 
-earthquakes = pd.read_csv('edrp/data/earthquakes_clean.csv', header=0)
+earthquakes = pd.read_csv('emp/data/earthquakes_clean.csv', header=0)

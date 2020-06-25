@@ -12,8 +12,8 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-from edrp.app import app
-from edrp.layouts import dashboard
+from emp.app import app
+from emp.layouts import dashboard
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),

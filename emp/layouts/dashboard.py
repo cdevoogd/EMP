@@ -8,9 +8,9 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import plotly.express as px
 
-from edrp.app import app
-from edrp.data.datasets import earthquakes
-import edrp.regressor as regressor
+from emp.app import app
+from emp.data.datasets import earthquakes
+import emp.regressor as regressor
 
 # Defaults are the center of the contiguous US
 default_latitude = 39.8283
@@ -36,7 +36,7 @@ scattermap.update_layout(margin={ 't': 5, 'b': 5 })
 
 layout = html.Div(children=[
     dbc.NavbarSimple(
-        brand='Earthquake Damage Risk Predictor',
+        brand='Earthquake Magnitude Predictor',
         color='primary',
         dark=True,
         fluid=True

@@ -1,1 +1,1 @@
-python -m edrp.index
+python -m emp.index

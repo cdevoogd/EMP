@@ -5,7 +5,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 
-from edrp.data.datasets import earthquakes
+from emp.data.datasets import earthquakes
 
 x = earthquakes[['latitude', 'longitude']]
 y = earthquakes[['magnitude']]
