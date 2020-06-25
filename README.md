@@ -1,6 +1,6 @@
-# EDRP - Earthquake Damage Risk Predictor
+# EMP: Earthquake Magnitude Predictor
 
-EDRP uses machine learning to determine the risk of property damage at a given location. By using U.S.G.S. earthquake data, the application can use measurements from previous nearby earthquakes and determine a measurement of risk for the given location.
+EMP uses machine learning, along with USGS earthquake data, to attempt to predict the magnitude of an earthquake at a specific location. 
 
 ## Getting Started
 
