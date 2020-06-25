@@ -1,6 +1,7 @@
 import os
 
 import dash
+import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
@@ -31,38 +32,78 @@ scattermap = px.scatter_mapbox(
     size_max=25,
     zoom=3)
 
-app = dash.Dash(__name__)
-app.layout = html.Div(children=[
-    html.H1(children='Earthquake Damage Risk Predictor'),
+# Shrink the margins (defaults 80) on the top and bottom to 5px
+scattermap.update_layout(margin={ 't': 5, 'b': 5 })
 
-    html.Form(children=[
-        dcc.Input(
-            id='input_latitude',
-            persistence_type='session',
-            placeholder=default_latitude,
-            type='number'
-        ),
-        dcc.Input(
-            id='input_longitude',
-            persistence_type='session',
-            placeholder=default_longitude,
-            type='number'
-        ),
-        html.Button(
-            children='Submit',
-            id='submit_location',
-            # Setting the button's type to 'button' prevents the page from being reloaded when it is pressed
-            type='button'
-        )
-    ]),
+stylesheets = ['https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css']
+app = dash.Dash(__name__, external_stylesheets=stylesheets)
+app.layout = html.Div(children=[
+    dbc.NavbarSimple(
+        brand='Earthquake Damage Risk Predictor',
+        color='primary',
+        dark=True,
+        fluid=True
+    ),
+
+    dbc.Row(
+        [
+            dbc.Col(
+                dbc.FormGroup(
+                    [
+                        dbc.Label('Latitude', html_for='input_latitude'),
+                        dbc.Input(
+                            className='input_latitude',
+                            id='input_latitude', 
+                            type='number', 
+                            placeholder=default_latitude
+                        )
+                    ],
+                    className='mr-1 mt-3'
+                ),
+                style={ 'max-width': '20%' }
+            ),
+            dbc.Col(
+                dbc.FormGroup(
+                    [
+                        dbc.Label('Longitude', html_for='input_longitude'),
+                        dbc.Input(
+                            className='input_longitude',
+                            id='input_longitude',
+                            type='number',
+                            placeholder=default_longitude
+                        )
+                    ],
+                    className='mr-1 mt-3'
+                ),
+                style={ 'max-width': '20%' }
+            ),
+            dbc.Col(
+                dbc.Button(
+                    'Submit', 
+                    id='submit_coords', 
+                    color='primary',
+                    className='align-self-end'
+                ),
+                # Setting this column to flex allows the submit button to line up with the bottom
+                # by using 'align-self-end'
+                className='d-flex mb-3'
+            )
+        ],
+        form=True,
+        style={ 'padding-left': '80px' }
+    ),
+    
 
     dcc.Graph(
         id='local_scattermap',
-        figure=scattermap
+        figure=scattermap,
+        config={
+            'displayModeBar': False
+        }
     )
 ])
 
-@app.callback(Output('local_scattermap', 'figure'), [Input('submit_location', 'n_clicks')], [State('input_latitude', 'value'), State('input_longitude', 'value')])
+@app.callback(Output('local_scattermap', 'figure'), [Input('submit_coords', 'n_clicks')], [State('input_latitude', 'value'), State('input_longitude', 'value')])
 def update_map_target(n_clicks, latitude, longitude):
     # This callback will fire when the page loads. We don't want to update the map until the button is actually clicked
     if n_clicks is not None:
