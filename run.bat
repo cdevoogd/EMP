@@ -1,1 +1,1 @@
-python edrp/app.py
+python -m edrp.index
