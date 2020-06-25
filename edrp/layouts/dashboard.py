@@ -10,6 +10,7 @@ import plotly.express as px
 
 from edrp.app import app
 from edrp.data.datasets import earthquakes
+import edrp.regressor as regressor
 
 # Defaults are the center of the contiguous US
 default_latitude = 39.8283
@@ -21,7 +22,7 @@ scattermap = px.scatter_mapbox(
     center={ 'lat': default_latitude, 'lon': default_longitude },
     color=earthquakes.magnitude,
     data_frame=earthquakes,
-    height=750, 
+    height=500, 
     lat=earthquakes.latitude, 
     lon=earthquakes.longitude,
     # Setting the size & opacity like this allows the larger earthquakes to stand out on the map
@@ -40,7 +41,7 @@ layout = html.Div(children=[
         dark=True,
         fluid=True
     ),
-
+    # Top Row - Coordinate Input Form + Prediction
     dbc.Row(
         [
             dbc.Col(
@@ -80,15 +81,15 @@ layout = html.Div(children=[
                     color='primary',
                     className='align-self-end'
                 ),
-                # Setting this column to flex allows the submit button to line up with the bottom
-                # by using 'align-self-end'
-                className='d-flex mb-3'
-            )
+            # Setting this column to flex allows the submit button to line up with the bottom
+            # by using 'align-self-end'
+            className='d-flex mb-3 justify-content-between',
+            style={ 'padding-right': '80px' }
+            ),
         ],
         form=True,
         style={ 'padding-left': '80px' }
     ),
-    
 
     dcc.Graph(
         id='local_scattermap',
@@ -96,12 +97,49 @@ layout = html.Div(children=[
         config={
             'displayModeBar': False
         }
+    ),
+    dbc.Card(
+        [
+            dbc.CardBody(
+                [
+                    html.H5('Prediction:', className='card-title'),
+                    html.P(id='magnitude_prediction', className='card-text') 
+                ]
+            ),
+            dbc.CardFooter(id='prediction_confidence')
+            
+        ]
     )
 ])
 
-@app.callback(Output('local_scattermap', 'figure'), [Input('submit_coords', 'n_clicks')], [State('input_latitude', 'value'), State('input_longitude', 'value')])
-def update_map_target(n_clicks, latitude, longitude):
-    # This callback will fire when the page loads. We don't want to update the map until the button is actually clicked
-    if n_clicks is not None:
-        scattermap.update_layout(mapbox_center={ 'lat': latitude, 'lon': longitude }, mapbox_zoom=6)
-    return scattermap
+
+@app.callback(
+    [Output('local_scattermap', 'figure'), Output('magnitude_prediction', 'children'), Output('prediction_confidence', 'children')], 
+    [Input('submit_coords', 'n_clicks')], 
+    [State('input_latitude', 'value'), State('input_longitude', 'value')])
+def on_submit_coordinates(n_clicks, latitude, longitude):
+    """When coordinates are submitted, this callback calls all of the necessary model & output functions"""
+    
+    defaults = (scattermap, '', '')
+    # This callback will fire when the page loads. So this will return defaults
+    if n_clicks is None:
+        return defaults
+
+    if not _verify_inputs([latitude, longitude]):
+        return defaults
+
+    scattermap.update_layout(mapbox_center={ 'lat': latitude, 'lon': longitude }, mapbox_zoom=6)
+    prediction = regressor.predict(latitude, longitude)
+    condifence = f'Confidence: {regressor.get_confidence()}'
+    
+    return scattermap, prediction, condifence
+
+def _verify_inputs(input_list):
+    """Checks that each value in the input_list is valid.
+    Does not check that the input is a number, as the HTML input wont allow anything other than that to be input
+    Returns True if all inputs pass all checks
+    """
+    for input in input_list:
+        if input is None:
+            return False
+    return True
