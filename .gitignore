@@ -5,3 +5,6 @@
 # Python Files
 *.pyc
 __pycache__/
+
+# Logs
+*.log

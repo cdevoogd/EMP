@@ -1,5 +1,5 @@
 """Dash layout for the application's main dashboard."""
-
+import logging
 import os
 
 import dash_bootstrap_components as dbc
@@ -11,6 +11,8 @@ import plotly.express as px
 from emp.app import app
 from emp.data.datasets import earthquakes
 import emp.regressor as regressor
+
+logger = logging.getLogger(__name__)
 
 # Defaults are the center of the contiguous US
 default_latitude = 39.8283
@@ -56,6 +58,8 @@ heatmap_largest_by_degree = px.density_heatmap(
     range_x=[-90, 90],
     range_y=[-180, 180]
 )
+
+logger.info('Plotly graphs generated successfully')
 
 layout = html.Div(children=[
     dbc.NavbarSimple(
@@ -154,6 +158,8 @@ def on_submit_coordinates(n_clicks, latitude, longitude):
     # This callback will fire when the page loads. So this will return defaults
     if n_clicks is None:
         return defaults
+
+    logger.info(f'User submitted coordinates ({latitude}, {longitude})')
 
     if not _verify_inputs([latitude, longitude]):
         return defaults
