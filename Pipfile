@@ -12,6 +12,7 @@ dash = "*"
 plotly = "*"
 python-dotenv = "*"
 dash-bootstrap-components = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
