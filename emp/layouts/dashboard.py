@@ -117,13 +117,13 @@ layout = html.Div(children=[
         [
             dbc.CardBody(
                 [
-                    html.H5('Prediction:', className='card-title'),
-                    html.P(id='magnitude_prediction', className='card-text') 
+                    html.H5('Prediction:', id='magnitude_prediction', className='card-title'),
+                    html.P('Confidence:', id='prediction_confidence', className='card-text')
                 ]
-            ),
-            dbc.CardFooter(id='prediction_confidence')
-            
-        ]
+            )
+        ],
+        className='mb-3',
+        style={ 'margin-left': '80px', 'margin-right': '80px' }
     ),
     dcc.Graph(
         id='graph_scattermap',
@@ -150,7 +150,7 @@ layout = html.Div(children=[
 def on_submit_coordinates(n_clicks, latitude, longitude):
     """When coordinates are submitted, this callback calls all of the necessary model & output functions"""
     
-    defaults = (scattermap, '', '')
+    defaults = (scattermap, 'Prediction: ', 'Confidence: ')
     # This callback will fire when the page loads. So this will return defaults
     if n_clicks is None:
         return defaults
@@ -159,7 +159,7 @@ def on_submit_coordinates(n_clicks, latitude, longitude):
         return defaults
 
     scattermap.update_layout(mapbox_center={ 'lat': latitude, 'lon': longitude }, mapbox_zoom=6)
-    prediction = regressor.predict(latitude, longitude)
+    prediction = f'Prediction: {regressor.predict(latitude, longitude)}'
     condifence = f'Confidence: {regressor.get_confidence()}'
     
     return scattermap, prediction, condifence
