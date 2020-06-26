@@ -41,6 +41,22 @@ histogram = px.histogram(
     x=earthquakes.magnitude
 )
 
+heatmap_largest_by_degree = px.density_heatmap(
+    data_frame=earthquakes,
+    x=earthquakes.latitude,
+    y=earthquakes.longitude,
+    z=earthquakes.magnitude,
+    range_color=[5.5, 10],
+    height=800,
+    title="Highest Magnitude per Geographic Degree",
+    # Getting the highest magnitude per geographic degree
+    histfunc='max',
+    nbinsx=180,
+    nbinsy=360,
+    range_x=[-90, 90],
+    range_y=[-180, 180]
+)
+
 layout = html.Div(children=[
     dbc.NavbarSimple(
         brand='Earthquake Magnitude Predictor',
@@ -119,6 +135,10 @@ layout = html.Div(children=[
     dcc.Graph(
         id='graph_histogram',
         figure=histogram
+    ),
+    dcc.Graph(
+        id='graph_scatter',
+        figure=heatmap_largest_by_degree
     ),
 ])
 
