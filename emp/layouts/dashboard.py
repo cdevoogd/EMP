@@ -34,6 +34,13 @@ scattermap = px.scatter_mapbox(
 # Shrink the margins (defaults 80) on the top and bottom to 5px
 scattermap.update_layout(margin={ 't': 5, 'b': 5 })
 
+histogram = px.histogram(
+    data_frame=earthquakes,
+    range_x=[5.5, 10],
+    title='Earthquake Magnitude Distribution',
+    x=earthquakes.magnitude
+)
+
 layout = html.Div(children=[
     dbc.NavbarSimple(
         brand='Earthquake Magnitude Predictor',
@@ -90,14 +97,6 @@ layout = html.Div(children=[
         form=True,
         style={ 'padding-left': '80px' }
     ),
-
-    dcc.Graph(
-        id='local_scattermap',
-        figure=scattermap,
-        config={
-            'displayModeBar': False
-        }
-    ),
     dbc.Card(
         [
             dbc.CardBody(
@@ -109,12 +108,23 @@ layout = html.Div(children=[
             dbc.CardFooter(id='prediction_confidence')
             
         ]
-    )
+    ),
+    dcc.Graph(
+        id='graph_scattermap',
+        figure=scattermap,
+        config={
+            'displayModeBar': False
+        }
+    ),
+    dcc.Graph(
+        id='graph_histogram',
+        figure=histogram
+    ),
 ])
 
 
 @app.callback(
-    [Output('local_scattermap', 'figure'), Output('magnitude_prediction', 'children'), Output('prediction_confidence', 'children')], 
+    [Output('graph_scattermap', 'figure'), Output('magnitude_prediction', 'children'), Output('prediction_confidence', 'children')], 
     [Input('submit_coords', 'n_clicks')], 
     [State('input_latitude', 'value'), State('input_longitude', 'value')])
 def on_submit_coordinates(n_clicks, latitude, longitude):
