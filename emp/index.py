@@ -10,7 +10,7 @@ Note: The index needs to stay seperate from the app module to prevent circular i
 import logging
 # Logging needs to be setup first so that it takes precedence
 formatter = '%(asctime)s - %(levelname)s - %(message)s'
-logging.basicConfig(filename='emp.log', format=formatter, level=logging.WARNING)
+logging.basicConfig(filename='emp.log', format=formatter, level=logging.INFO)
 logger = logging.getLogger(__name__)    
 
 import dash_core_components as dcc
