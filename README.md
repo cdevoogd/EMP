@@ -45,6 +45,7 @@ pipenv shell
 .\run.bat 
 ```
 
+Your instance should be up and running at 127.0.0.1:8050.
 ## Built With
 
 - [Plotly Dash](https://plotly.com/dash/)
